@@ -1,0 +1,155 @@
+# ~/.config/i3/config — Tokyo Night rice
+
+set $mod Mod4
+
+# Fonts (titlebars + fallback)
+font pango:JetBrainsMono Nerd Font 10
+
+# Gaps — require i3 >= 4.22. Ubuntu 22.04 ships 4.20.1, so gaps are disabled.
+# To enable later: add the i3 upstream apt repo (https://i3wm.org/docs/repositories.html),
+# upgrade i3, then uncomment the four lines below.
+# gaps inner 8
+# gaps outer 0
+# smart_gaps on
+# smart_borders on
+
+# Tokyo Night colors
+set $bg       #1a1b26
+set $fg       #c0caf5
+set $muted    #565f89
+set $accent   #7aa2f7
+set $red      #f7768e
+set $green    #9ece6a
+set $yellow   #e0af68
+set $purple   #bb9af7
+
+# class                 border   bg       text     indicator child
+client.focused          $accent  $accent  $bg      $accent   $accent
+client.focused_inactive $muted   $bg      $fg      $muted    $muted
+client.unfocused        $muted   $bg      $muted   $muted    $muted
+client.urgent           $red     $red     $bg      $red      $red
+
+# Autostart
+exec --no-startup-id setxkbmap -option ctrl:nocaps
+exec --no-startup-id xss-lock --transfer-sleep-lock -- betterlockscreen -l dim
+exec --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id picom --daemon
+exec --no-startup-id dunst
+exec --no-startup-id feh --bg-fill ~/Pictures/wallpapers/tokyo-night.jpg
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+exec --no-startup-id redshift-gtk
+exec --no-startup-id ~/.local/bin/greenclip daemon
+exec --no-startup-id flameshot
+# Scratchpad terminal
+exec --no-startup-id ghostty --class=scratchpad-term
+
+# Window rules
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [title="flameshot"] floating enable
+for_window [instance="scratchpad-term"] move scratchpad, scratchpad show, resize set 1200 600, move position center
+
+# Workspace assignments — class names verified with `xprop WM_CLASS`
+# Adjust strings below if xprop reveals different classes.
+assign [class="(?i)ghostty"] 1
+assign [class="(?i)cursor"] 2
+assign [class="(?i)code"] 2
+assign [class="(?i)google-chrome"] 3
+assign [class="(?i)brave-browser"] 3
+assign [class="(?i)spotify"] 10
+
+# --- keybindings ---
+bindsym $mod+Return exec ghostty
+bindsym $mod+d exec rofi -show drun
+bindsym $mod+Tab exec rofi -show window
+bindsym $mod+Shift+v exec rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+
+# focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# layout / window
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# split direction
+bindsym $mod+b split h
+bindsym $mod+v split v
+
+# resize mode
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+# system
+bindsym $mod+shift+x exec betterlockscreen -l dim
+bindsym $mod+shift+n exec dunstctl set-paused toggle
+bindsym $mod+p exec arandr
+bindsym $mod+n [instance="scratchpad-term"] scratchpad show
+
+# screenshots
+bindsym Print exec flameshot gui
+bindsym Shift+Print exec flameshot full -c -p ~/Pictures/Screenshots
+bindsym $mod+Shift+s exec flameshot gui
+
+# volume / media
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# brightness (harmless no-op on desktops)
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+
+# disable i3's built-in bar (polybar replaces it)
+bar {
+    mode invisible
+}

@@ -1,0 +1,47 @@
+# starship — Tokyo Night prompt
+
+add_newline = true
+format = """
+$directory$git_branch$git_status$rust$nodejs$python$golang$cmd_duration
+$character"""
+
+[character]
+success_symbol = "[❯](#9ece6a)"
+error_symbol = "[❯](#f7768e)"
+vicmd_symbol = "[❮](#7aa2f7)"
+
+[directory]
+style = "#7aa2f7 bold"
+truncation_length = 3
+truncate_to_repo = true
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = " "
+style = "#bb9af7"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "#e0af68"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[cmd_duration]
+min_time = 2000
+style = "#565f89"
+format = "[$duration]($style) "
+
+[rust]
+symbol = " "
+style = "#f7768e"
+
+[nodejs]
+symbol = " "
+style = "#9ece6a"
+
+[python]
+symbol = " "
+style = "#e0af68"
+
+[golang]
+symbol = " "
+style = "#7dcfff"

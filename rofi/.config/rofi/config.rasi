@@ -1,0 +1,13 @@
+configuration {
+    modi: "drun,window,run,ssh";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    font: "JetBrainsMono Nerd Font 12";
+    drun-display-format: "{name}";
+    window-format: "{w}  {c}   {t}";
+    display-drun: "   ";
+    display-run: "   ";
+    display-window: "   ";
+    sidebar-mode: false;
+}
+@theme "~/.config/rofi/tokyonight.rasi"

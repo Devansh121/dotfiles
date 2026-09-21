@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# gh CLI with a separate config dir for the Devansh121 GitHub account.
+export GH_CONFIG_DIR="$HOME/.config/gh-devansh121"
+exec gh "$@"
