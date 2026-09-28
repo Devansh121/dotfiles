@@ -18,14 +18,31 @@ Stow-style layout: each top-level folder is a package whose contents mirror `$HO
 
 ## Install
 
+Fresh machine (Ubuntu 22.04+): installs the tools, then links the configs.
+
 ```sh
 git clone https://github.com/Devansh121/dotfiles ~/dotfiles
 cd ~/dotfiles
+./bootstrap.sh            # tools + configs + herdr Claude hook
+./bootstrap.sh --no-rice  # skip i3 / polybar / rofi / picom / dunst
+./bootstrap.sh --dry-run  # show what it would do
+```
+
+Configs only (tools already installed):
+
+```sh
 ./install.sh            # everything
 ./install.sh nvim tmux  # a subset
 ```
 
 `install.sh` needs no dependencies. With GNU stow installed, `stow nvim tmux ...` from this directory does the same thing.
 
-## Runtime deps
-nvim >= 0.11, tmux, tpm (`git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`), ghostty, starship, fzf, ripgrep, JetBrainsMono Nerd Font.
+## What bootstrap installs
+Skips anything already installed.
+
+- apt: git, curl, unzip, tmux, terminator, fzf, ripgrep (+ i3, polybar, rofi, picom, dunst unless `--no-rice`)
+- nvim (latest release tarball, apt's is too old), lazygit, starship, herdr → `~/.local/bin`
+- ghostty (snap), tpm, JetBrainsMono Nerd Font
+- `herdr integration install claude` for each Claude profile dir (`~/.claude`, `~/.claude-*` with a `settings.json`)
+
+After it finishes: open tmux and press prefix + `I` for tmux plugins.
