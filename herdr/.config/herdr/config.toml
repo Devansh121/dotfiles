@@ -1,0 +1,6 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+space"
+next_workspace = "ctrl+shift+right"
+previous_workspace = "ctrl+shift+left"

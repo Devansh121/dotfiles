@@ -226,3 +226,4 @@ PROMPT_COMMAND=_tmux_rs_prompt
 export PATH="$HOME/.grok/bin:$PATH"
 [[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
 # <<< grok installer <<<
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64

@@ -1,0 +1,19 @@
+[global_config]
+  suppress_multiple_term_dialog = True
+  case_sensitive = False
+[keybindings]
+  resize_left = ""
+  resize_right = ""
+[profiles]
+  [[default]]
+    background_darkness = 0.46
+    cursor_color = "#aaaaaa"
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]

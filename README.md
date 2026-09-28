@@ -13,6 +13,8 @@ Stow-style layout: each top-level folder is a package whose contents mirror `$HO
 | ghostty  | Tokyo Night, JetBrainsMono Nerd Font                   |
 | starship | Tokyo Night prompt                                     |
 | lazygit  | config                                                 |
+| herdr    | prefix `C-Space`, `C-S-Left/Right` switch workspaces   |
+| terminator | resize_left/right unbound so herdr gets `C-S-Left/Right` |
 
 ## Install
 
