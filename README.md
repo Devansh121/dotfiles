@@ -46,3 +46,15 @@ Skips anything already installed.
 - `herdr integration install claude` for each Claude profile dir (`~/.claude`, `~/.claude-*` with a `settings.json`)
 
 After it finishes: open tmux and press prefix + `I` for tmux plugins.
+
+## i3 profiles
+`~/.config/i3/config` only does `include active.conf`. Two profiles ship:
+
+- `prime` — ThePrimeagen's i3 config (Alt as mod, stock i3status bar, rofi, flameshot), adapted for ghostty/pactl/brightnessctl.
+- `rice`  — the Tokyo Night setup: Super as mod, polybar, picom, dunst, scratchpad terminal, media keys.
+
+```sh
+i3-profile          # show active + available
+i3-profile prime    # switch and reload i3
+```
+Log out and pick the **i3** session at the login screen to use either.

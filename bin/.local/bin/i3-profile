@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# i3-profile [prime|rice]  -> point ~/.config/i3/active.conf at a profile and reload i3.
+set -euo pipefail
+dir="$HOME/.config/i3"
+if [ $# -eq 0 ]; then
+  printf 'active: %s\navailable: %s\n' "$(basename "$(readlink -f "$dir/active.conf" 2>/dev/null || echo none)" .conf)" \
+    "$(ls "$dir"/*.conf | xargs -n1 basename | sed 's/\.conf$//' | grep -v '^active$' | tr '\n' ' ')"; exit 0
+fi
+target="$(readlink -f "$dir/$1.conf")"
+[ -f "$target" ] || { echo "no profile '$1' in $dir"; exit 1; }
+tmp=$(mktemp); printf 'include %s\n' "$target" > "$tmp"
+i3 -C -c "$tmp" >/dev/null || { rm -f "$tmp"; echo "config check failed for $1"; exit 1; }; rm -f "$tmp"
+ln -sfn "$target" "$dir/active.conf"
+pgrep -x i3 >/dev/null && i3-msg -q reload && echo "i3 reloaded with '$1'" || echo "active profile set to '$1' (i3 not running)"
