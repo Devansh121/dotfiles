@@ -1,2 +1,7 @@
-# Profiles live next to this file; `i3-profile prime|rice` picks one and reloads.
-include active.conf
+# Profiles (prime.conf, rice.conf) live in ~/.config/i3; `i3-profile <name>` points
+# active.conf at one and reloads. Absolute path: i3 resolves this file through its
+# symlink into the dotfiles repo, so a relative include would look in the wrong dir.
+include ~/.config/i3/active.conf
+
+# Escape hatch that works even if the include above fails and no profile loads.
+bindsym Mod4+Mod1+Escape exit

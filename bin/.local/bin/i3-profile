@@ -8,7 +8,11 @@ if [ $# -eq 0 ]; then
 fi
 target="$(readlink -f "$dir/$1.conf")"
 [ -f "$target" ] || { echo "no profile '$1' in $dir"; exit 1; }
-tmp=$(mktemp); printf 'include %s\n' "$target" > "$tmp"
-i3 -C -c "$tmp" >/dev/null || { rm -f "$tmp"; echo "config check failed for $1"; exit 1; }; rm -f "$tmp"
+ln -sfn "$target" "$dir/active.conf.new"
+out=$(i3 -C -V -c "$dir/config" 2>&1 <<<"" ; true)
+if i3 -C -c "$dir/config" >/dev/null 2>&1 && ! grep -q "Skipping" <<<"$out"; then :; else
+  rm -f "$dir/active.conf.new"; echo "config check failed for $1:"; grep -E "Skipping|ERROR|error" <<<"$out" | head; exit 1
+fi
+rm -f "$dir/active.conf.new"
 ln -sfn "$target" "$dir/active.conf"
 pgrep -x i3 >/dev/null && i3-msg -q reload && echo "i3 reloaded with '$1'" || echo "active profile set to '$1' (i3 not running)"
