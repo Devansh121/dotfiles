@@ -15,6 +15,7 @@ Stow-style layout: each top-level folder is a package whose contents mirror `$HO
 | lazygit  | config                                                 |
 | herdr    | prefix `C-Space`, `C-S-Left/Right` switch workspaces, dracula theme |
 | terminator | resize_left/right unbound so herdr gets `C-S-Left/Right` |
+| htop     | detailed CPU time, freq/temp, disk/net/PSI meters, extra columns (threads, swap, IO, OOM), tree view |
 
 ## Install
 
@@ -40,7 +41,7 @@ Configs only (tools already installed):
 ## What bootstrap installs
 Skips anything already installed.
 
-- apt: git, curl, unzip, tmux, terminator, fzf, ripgrep (+ i3, polybar, rofi, picom, dunst unless `--no-rice`)
+- apt: git, curl, unzip, tmux, terminator, fzf, ripgrep, htop (+ i3, polybar, rofi, picom, dunst unless `--no-rice`)
 - nvim (latest release tarball, apt's is too old), lazygit, starship, herdr → `~/.local/bin`
 - ghostty (snap), tpm, JetBrainsMono Nerd Font
 - `herdr integration install claude` for each Claude profile dir (`~/.claude`, `~/.claude-*` with a `settings.json`)
@@ -58,3 +59,6 @@ i3-profile          # show active + available
 i3-profile prime    # switch and reload i3
 ```
 Log out and pick the **i3** session at the login screen to use either.
+
+## htop
+htop rewrites `htoprc` whenever a setting changes in its UI. 3.0.x writes through the symlink, so changes land in the repo. htop 3.1+ saves via temp file + rename, which replaces the symlink with a plain file: after upgrading, check `ls -l ~/.config/htop/htoprc` and re-run `./install.sh htop` if it is no longer a link.
