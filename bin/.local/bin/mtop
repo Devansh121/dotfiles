@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# htop 3.5 built from source (bootstrap.sh) with its own config, so the apt htop 3.0.5 keeps working.
+export HTOPRC="$HOME/.config/mtop/htoprc"
+exec "$HOME/.local/opt/htop/bin/htop" "$@"

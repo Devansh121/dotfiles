@@ -15,7 +15,7 @@ Stow-style layout: each top-level folder is a package whose contents mirror `$HO
 | lazygit  | config                                                 |
 | herdr    | prefix `C-Space`, `C-S-Left/Right` switch workspaces, dracula theme |
 | terminator | resize_left/right unbound so herdr gets `C-S-Left/Right` |
-| htop     | detailed CPU time, freq/temp, disk/net/PSI meters, extra columns (threads, swap, IO, OOM), tree view |
+| htop / mtop | detailed CPU time, freq/temp, disk/net/PSI meters, extra columns (threads, swap, IO, OOM), tree view |
 | btop     | Tokyo Night theme (bundled, not shipped by btop 1.2.3), 1s refresh, process tree, per-disk IO graphs, user/system CPU graphs |
 
 ## Install
@@ -61,5 +61,7 @@ i3-profile prime    # switch and reload i3
 ```
 Log out and pick the **i3** session at the login screen to use either.
 
-## htop
-htop rewrites `htoprc` whenever a setting changes in its UI. 3.0.x writes through the symlink, so changes land in the repo. htop 3.1+ saves via temp file + rename, which replaces the symlink with a plain file: after upgrading, check `ls -l ~/.config/htop/htoprc` and re-run `./install.sh htop` if it is no longer a link.
+## htop / mtop
+- `htop` is apt's 3.0.5 (config `~/.config/htop/htoprc`).
+- `mtop` is htop 3.5.3 built from source into `~/.local/opt/htop` by `bootstrap.sh`, with its own config `~/.config/mtop/htoprc` (newer htoprc format would break 3.0.5). Adds per-core CPU temperature on Ryzen, tabs (Main / I/O / Memory / Sched), disk rate + busy meters.
+- Both write changes made in the UI through the symlink, so they land in this repo.

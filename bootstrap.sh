@@ -36,6 +36,14 @@ if ! have nvim; then
   run ln -sf "$opt/nvim/bin/nvim" "$bin/nvim"
 fi
 
+# htop 3.5 from source, run as `mtop` (apt's 3.0.5 has no Ryzen temps or tabs): ~/.local/opt/htop
+htop_ver=3.5.3
+if [ ! -x "$opt/htop-$htop_ver/bin/htop" ]; then
+  run sudo apt-get install -y build-essential pkg-config libncurses-dev libsensors-dev libcap-dev libnl-3-dev libnl-genl-3-dev
+  run sh -c "cd /tmp && curl -fsSL https://github.com/htop-dev/htop/releases/download/$htop_ver/htop-$htop_ver.tar.xz | tar -xJ && cd htop-$htop_ver && CPPFLAGS=-I/usr/include/libnl3 ./configure --prefix='$opt/htop-$htop_ver' --enable-sensors --enable-delayacct --enable-capabilities && make -j\$(nproc) && make install && cd /tmp && rm -rf htop-$htop_ver"
+  run ln -sfn "htop-$htop_ver" "$opt/htop"
+fi
+
 if ! have lazygit; then
   url=$(gh_asset jesseduffield/lazygit '[Ll]inux_x86_64\.tar\.gz$')
   run sh -c "curl -fsSL '$url' | tar -xz -C '$bin' lazygit"
