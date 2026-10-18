@@ -24,7 +24,7 @@ run() { if [ $dry -eq 1 ]; then echo "would: $*"; else echo "+ $*"; "$@"; fi; }
 gh_asset() { curl -fsSL "https://api.github.com/repos/$1/releases/latest" | grep -o '"browser_download_url": *"[^"]*"' | cut -d'"' -f4 | grep -E "$2" | head -1; }
 
 # apt packages, only the missing ones
-pkgs=(git curl unzip tmux terminator fzf ripgrep htop)
+pkgs=(git curl unzip tmux terminator fzf ripgrep htop btop)
 [ $rice -eq 1 ] && pkgs+=(i3 polybar rofi picom dunst)
 missing=()
 for p in "${pkgs[@]}"; do dpkg -s "$p" >/dev/null 2>&1 || missing+=("$p"); done

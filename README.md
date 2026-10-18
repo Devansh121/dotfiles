@@ -16,6 +16,7 @@ Stow-style layout: each top-level folder is a package whose contents mirror `$HO
 | herdr    | prefix `C-Space`, `C-S-Left/Right` switch workspaces, dracula theme |
 | terminator | resize_left/right unbound so herdr gets `C-S-Left/Right` |
 | htop     | detailed CPU time, freq/temp, disk/net/PSI meters, extra columns (threads, swap, IO, OOM), tree view |
+| btop     | Tokyo Night theme (bundled, not shipped by btop 1.2.3), 1s refresh, process tree, per-disk IO graphs, user/system CPU graphs |
 
 ## Install
 
@@ -41,7 +42,7 @@ Configs only (tools already installed):
 ## What bootstrap installs
 Skips anything already installed.
 
-- apt: git, curl, unzip, tmux, terminator, fzf, ripgrep, htop (+ i3, polybar, rofi, picom, dunst unless `--no-rice`)
+- apt: git, curl, unzip, tmux, terminator, fzf, ripgrep, htop, btop (+ i3, polybar, rofi, picom, dunst unless `--no-rice`)
 - nvim (latest release tarball, apt's is too old), lazygit, starship, herdr → `~/.local/bin`
 - ghostty (snap), tpm, JetBrainsMono Nerd Font
 - `herdr integration install claude` for each Claude profile dir (`~/.claude`, `~/.claude-*` with a `settings.json`)
