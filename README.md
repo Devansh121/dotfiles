@@ -10,11 +10,11 @@ Stow-style layout: each top-level folder is a package whose contents mirror `$HO
 | bin      | `dev-gh` (gh with personal account), `tmux-rs-*` resurrect helpers |
 | i3       | i3 config, caps as ctrl, ghostty + rofi bindings         |
 | polybar / rofi / picom / dunst | i3 rice, Tokyo Night              |
-| ghostty  | Tokyo Night, JetBrainsMono Nerd Font                   |
+| ghostty  | Monokai Pro Spectrum (true red in slots 1/9), Hack Nerd Font Mono, orange block cursor, cursor shaders (see below) |
 | starship | Tokyo Night prompt                                     |
 | lazygit  | config                                                 |
 | herdr    | prefix `C-Space`, `C-S-Left/Right` switch workspaces, dracula theme |
-| terminator | resize_left/right unbound so herdr gets `C-S-Left/Right` |
+| terminator | same theme, font and cursor as ghostty, CursorFX cursor-trail plugin (see below), resize_left/right unbound so herdr gets `C-S-Left/Right` |
 | htop / mtop | detailed CPU time, freq/temp, disk/net/PSI meters, extra columns (threads, swap, IO, OOM), tree view |
 | btop     | Tokyo Night theme (bundled, not shipped by btop 1.2.3), 1s refresh, process tree, per-disk IO graphs, user/system CPU graphs |
 
@@ -44,7 +44,7 @@ Skips anything already installed.
 
 - apt: git, curl, unzip, tmux, terminator, fzf, ripgrep, htop, btop (+ i3, polybar, rofi, picom, dunst unless `--no-rice`)
 - nvim (latest release tarball, apt's is too old), lazygit, starship, herdr → `~/.local/bin`
-- ghostty (snap), tpm, JetBrainsMono Nerd Font
+- ghostty (snap), tpm, Hack + JetBrainsMono Nerd Fonts (Hack for ghostty/terminator, JetBrainsMono for the i3 rice)
 - `herdr integration install claude` for each Claude profile dir (`~/.claude`, `~/.claude-*` with a `settings.json`)
 
 After it finishes: open tmux and press prefix + `I` for tmux plugins.
@@ -65,3 +65,9 @@ Log out and pick the **i3** session at the login screen to use either.
 - `htop` is apt's 3.0.5 (config `~/.config/htop/htoprc`).
 - `mtop` is htop 3.5.3 built from source into `~/.local/opt/htop` by `bootstrap.sh`, with its own config `~/.config/mtop/htoprc` (newer htoprc format would break 3.0.5). Adds per-core CPU temperature on Ryzen, tabs (Main / I/O / Memory / Sched), disk rate + busy meters.
 - Both write changes made in the UI through the symlink, so they land in this repo.
+
+## Cursor effects
+- **ghostty**: `custom-shader` loads `shaders/cursor_warp.glsl` (the cursor smears along its path when it jumps) and `shaders/ripple_cursor.glsl` (a ring when the cursor changes shape), from [sahaj-b/cursor-shaders](https://github.com/sahaj-b/cursor-shaders) (MIT, `shaders/LICENSE`).
+- **terminator**: `plugins/cursor_fx.py` (CursorFX), enabled by `enabled_plugins = CursorFX` in the config. It paints the same warp trail with Cairo over each terminal, and skips it while an app has the cursor hidden. The ripple is ported but off (`RIPPLE = False`).
+- Terminator loads plugins only when its process starts. New windows join the running process, so quit every window to pick up plugin changes, or run `terminator -u` for a separate process.
+- Cost on this laptop: the plugin uses about 1% of one core while typing. The ghostty snap can't load NVIDIA's EGL driver here and renders on the CPU (Mesa llvmpipe), so its always-on shader animation uses several cores.

@@ -55,11 +55,13 @@ have herdr || run sh -c "curl -fsSL https://herdr.dev/install.sh | sh"
 
 [ -d "$HOME/.tmux/plugins/tpm" ] || run git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 
-if ! fc-list : family | grep -i "JetBrainsMono Nerd" >/dev/null; then
-  url=$(gh_asset ryanoasis/nerd-fonts '/JetBrainsMono\.zip$')
-  fonts=$HOME/.local/share/fonts/JetBrainsMono
-  run sh -c "mkdir -p '$fonts' && curl -fsSL -o /tmp/JetBrainsMono.zip '$url' && unzip -oq /tmp/JetBrainsMono.zip -d '$fonts' && rm /tmp/JetBrainsMono.zip && fc-cache -f"
-fi
+# Nerd Fonts: Hack for ghostty/terminator, JetBrainsMono for the i3 rice
+for font in Hack JetBrainsMono; do
+  fc-list : family | grep -i "$font Nerd" >/dev/null && continue
+  url=$(gh_asset ryanoasis/nerd-fonts "/$font\\.zip\$")
+  fonts=$HOME/.local/share/fonts/$font
+  run sh -c "mkdir -p '$fonts' && curl -fsSL -o /tmp/$font.zip '$url' && unzip -oq /tmp/$font.zip -d '$fonts' && rm /tmp/$font.zip && fc-cache -f"
+done
 
 # configs
 if [ $dry -eq 1 ]; then echo "would: ./install.sh"; else ./install.sh; fi
