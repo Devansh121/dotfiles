@@ -1,14 +1,39 @@
-# ghostty — Tokyo Night
-theme = TokyoNight
-font-family = JetBrainsMono Nerd Font
+# ghostty — Monokai Pro Spectrum (Gabe Sampson setup, adapted for Linux/i3)
+# previous Tokyo Night config: config.tokyonight.bak
+
+# font
+font-family = Hack Nerd Font Mono
 font-size = 13
+
+# theme: Monokai Pro Spectrum with a darker background
+theme = Monokai Pro Spectrum
+background = #0F0F0F
+# override Monokai pink "red" slots with a true red
+palette = 1=#ff5555
+palette = 9=#ff6e6e
+background-opacity = 1.0
+
+# cursor: #FF7700 orange, solid block
+cursor-color = #FF7700
+cursor-text = #0F0F0F
 cursor-style = block
 cursor-style-blink = false
-background-opacity = 0.95
+
+# cursor effects (sahaj-b/ghostty-cursor-shaders)
+custom-shader = shaders/cursor_warp.glsl
+custom-shader = shaders/ripple_cursor.glsl
+custom-shader-animation = true
+
+# window
 window-padding-x = 12
 window-padding-y = 12
+window-padding-color = extend
 window-decoration = true
+window-save-state = always
+
+# behaviour
 mouse-hide-while-typing = true
 copy-on-select = clipboard
 confirm-close-surface = false
-shell-integration = fish
+shell-integration = detect
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo
