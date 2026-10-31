@@ -1,13 +1,37 @@
+# terminator — mirrors ~/.config/ghostty/config (Monokai Pro Spectrum, Hack Nerd Font)
+# previous config: config.bak.20261026-preghostty
+# cursor shaders: ported as plugins/cursor_fx.py (CursorFX); not portable: window-save-state
 [global_config]
+  enabled_plugins = CursorFX,
   suppress_multiple_term_dialog = True
   case_sensitive = False
+  title_hide_sizetext = True
+  inactive_color_offset = 1.0
 [keybindings]
+  # freed for herdr workspace switching (ctrl+shift+left/right)
   resize_left = ""
   resize_right = ""
 [profiles]
   [[default]]
-    background_darkness = 0.46
-    cursor_color = "#aaaaaa"
+    use_system_font = False
+    font = Hack Nerd Font Mono 13
+    use_theme_colors = False
+    background_color = "#0f0f0f"
+    foreground_color = "#f7f1ff"
+    background_type = solid
+    background_darkness = 1.0
+    # Monokai Pro Spectrum, slots 1/9 overridden with true red (as in ghostty)
+    palette = "#222222:#ff5555:#7bd88f:#fce566:#fd9353:#948ae3:#5ad4e6:#f7f1ff:#69676c:#ff6e6e:#7bd88f:#fce566:#fd9353:#948ae3:#5ad4e6:#f7f1ff"
+    cursor_color = "#ff7700"
+    cursor_color_fg = False
+    cursor_fg_color = "#0f0f0f"
+    cursor_shape = block
+    cursor_blink = False
+    copy_on_selection = True
+    scrollbar_position = hidden
+    scrollback_lines = 10000
+    show_titlebar = False
+    bold_is_bright = False
 [layouts]
   [[default]]
     [[[window0]]]
